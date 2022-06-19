@@ -1,0 +1,25 @@
+[
+  {
+    "cpu": ${fargate_cpu},
+    "image": "${app_image}",
+    "memory": ${fargate_memory},
+    "name": "cwmetrics",
+    "networkMode": "awsvpc",
+    "essential": true,
+    "portMappings": [
+      {
+        "containerPort": ${port},
+        "hostPort": ${port}
+      }
+    ],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group": "ecs-cwmetrics",
+        "awslogs-region": "${aws_region}",
+        "awslogs-create-group": "true",
+        "awslogs-stream-prefix": "ecs"
+      }
+    }
+  }
+]

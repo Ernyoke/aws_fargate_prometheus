@@ -1,0 +1,32 @@
+[
+  {
+    "image": "amazon/cloudwatch-agent:1.247346.0b249609",
+    "name": "cloudwatch-agent-prometheus",
+    "networkMode": "awsvpc",
+    "essential": true,
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group": "/ecs/ecs-cwagent-prometheus",
+        "awslogs-region": "${aws_region}",
+        "awslogs-create-group": "true",
+        "awslogs-stream-prefix": "ecs-FARGATE-awsvpc"
+      }
+    },
+    "secrets": [
+      {
+        "name": "PROMETHEUS_CONFIG_CONTENT",
+        "valueFrom": "${prometheus_config_content}"
+      },
+      {
+        "name": "CW_CONFIG_CONTENT",
+        "valueFrom": "${cw_config_content}"
+      }
+    ],
+    "requiresCompatibilities": [
+      "FARGATE"
+    ],
+    "cpu": 512,
+    "memory": 1024
+  }
+]
